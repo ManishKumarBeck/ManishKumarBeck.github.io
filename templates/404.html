@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block meta %}
+<title>Page not found | {{ site.name }}</title>
+<meta name="robots" content="noindex">
+{% endblock %}
+{% block main %}
+<section class="notfound">
+  <div class="wrap wrap--narrow">
+    <p class="kicker">404</p>
+    <h1>That page doesn't exist.</h1>
+    <p>The link may be out of date.</p>
+    <a class="btn btn--primary" href="{{ base }}">Back to home</a>
+  </div>
+</section>
+{% endblock %}

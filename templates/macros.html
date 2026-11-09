@@ -1,0 +1,38 @@
+{% macro external(href, label, cls="link") %}
+<a class="{{ cls }}" href="{{ href }}" target="_blank" rel="noopener noreferrer">{{ label }}<span class="link__arrow" aria-hidden="true">↗</span><span class="sr"> (opens in a new tab)</span></a>
+{% endmacro %}
+
+{% macro flow(nodes) %}
+<ol class="flow" aria-label="Pipeline: {{ nodes | join(', ') }}">
+  {% for node in nodes %}
+  <li class="flow__node" style="--i:{{ loop.index0 }}">{{ node }}</li>
+  {% endfor %}
+</ol>
+{% endmacro %}
+
+{% macro tags(items) %}
+<ul class="tags">
+  {% for item in items %}<li>{{ item }}</li>{% endfor %}
+</ul>
+{% endmacro %}
+
+{% macro glyph(name) %}
+<svg class="glyph" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+{% if name == "code" %}<path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>
+{% elif name == "spark" %}<path d="M12 3.5 13.8 10l6.7 2-6.7 2L12 20.5 10.2 14l-6.7-2 6.7-2z"/>
+{% elif name == "server" %}<rect x="4" y="4.5" width="16" height="6" rx="1.5"/><rect x="4" y="13.5" width="16" height="6" rx="1.5"/><path d="M7.5 7.5h.01M7.5 16.5h.01"/>
+{% elif name == "cloud" %}<path d="M7.5 18.5h9a4 4 0 0 0 .7-7.9 5.5 5.5 0 0 0-10.6-1A4.5 4.5 0 0 0 7.5 18.5z"/>
+{% elif name == "loop" %}<path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 0 1-13.7 5.6L4 15.5M4 20v-4.5h4.5"/>
+{% elif name == "pulse" %}<path d="M3 12h4l2.5-6.5 4.5 13 2.5-6.5H21"/>
+{% else %}<path d="M4.5 12.5 9.5 17.5 19.5 6.5"/>{% endif %}
+</svg>
+{% endmacro %}
+
+{% macro project_links(links) %}
+<div class="links">
+  {% for l in links %}
+  {{ external(l.href, l.label) }}
+  {% if l.note %}<span class="links__note">{{ l.note }}</span>{% endif %}
+  {% endfor %}
+</div>
+{% endmacro %}

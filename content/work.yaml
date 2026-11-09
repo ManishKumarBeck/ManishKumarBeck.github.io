@@ -1,0 +1,100 @@
+# Earlier Unity, AR and VR work. Copy preserved from the original portfolio.
+# Each entry gets a page at /work/<slug>/.
+
+work:
+  - slug: ar-vr-prototypes
+    name: AR-VR Prototypes
+    tagline: Immersive AR and VR prototypes in Unity.
+    meta: AR / VR
+    cover: media/work/ar-vr-prototypes/cover.webp
+    clips:
+      - { n: 1, label: VR Jenga }
+      - { n: 2, label: Marble race track }
+      - { n: 3, label: VR garden }
+      - { n: 4, label: Air-drawn shape recognition }
+    sections:
+      - title: Hybrid 3D + AR Adventure Game
+        summary: A mobile game blending 3D gameplay with immersive AR exploration.
+        bullets:
+          - Implemented an in-game avatar system and bonus pack purchases using Unity IAP.
+          - Developed a fully functional avatar gallery for player customisation and selection.
+          - Built an AR mode where users scan their surroundings to spawn controllable avatars into the real world.
+          - Created an AR treasure hunt where players explore physical space to discover hidden collectibles.
+          - Independently designed and developed the full AR scene, interaction, visuals and gameplay.
+        tech: [Unity, Unity IAP, AR Foundation, C#, Android]
+        video: https://vimeo.com/1118377441
+      - title: VR Marble Race Puzzle Prototype
+        summary: A VR puzzle where players build custom marble tracks to reach the goal.
+        bullets:
+          - Prototyped a VR puzzle mechanic combining physics, spatial reasoning and user-placed components.
+          - Designed a system where users assemble pipes and puzzle pieces in 3D space to guide a marble to the finish.
+          - Focused on intuitive interaction and satisfying feedback for object placement and marble physics.
+          - Explored player agency through open-ended solutions and strategic construction.
+        tech: [Unity, XR Interaction Toolkit, C#, Oculus Quest 2]
+      - title: VR Banking Transaction Demo
+        summary: A prototype simulating digital banking interactions entirely within VR.
+        bullets:
+          - Developed a virtual banking interface where users could perform basic transactions in VR.
+          - Simulated core actions like account access, fund transfers and virtual ATM interactions.
+          - Focused on usability and familiarity, adapting real-world banking flows to immersive 3D space.
+          - Explored UI and UX patterns for financial interactions in spatial environments.
+        tech: [Unity, XR Interaction Toolkit, C#, Oculus Quest 2]
+        video: https://vimeo.com/1118380544
+      - title: Air-Drawn Shape Recognition Prototype
+        summary: A VR concept where users draw shapes in the air to trigger educational tools or magical effects.
+        bullets:
+          - Implemented gesture-based shape drawing using motion tracking to recognise input in 3D space.
+          - "Designed dual interaction modes: an educational mode that spawns visual equivalents of drawn shapes, and a magic mode that triggers spell effects from recognised glyphs."
+          - Focused on real-time feedback, clarity in gesture recognition and immersive response systems.
+        tech: [Unity, XR Interaction Toolkit, C#, Oculus Quest 2]
+
+  - slug: mecha-wars
+    name: Mecha Wars
+    tagline: 3D tower defence game set in a Nevada military base.
+    meta: 3D tower defence
+    cover: media/work/mecha-wars/cover.webp
+    clips:
+      - { n: 1, label: Gameplay }
+      - { n: 2, label: Gameplay }
+      - { n: 3, label: Gameplay }
+    bullets:
+      - Implemented wave-based enemy spawning, tower placement and an in-game economy system.
+      - Designed auto-targeting towers with upgrade mechanics for scalable defence strategy.
+      - Enemy AI can counter-attack towers, creating a reactive gameplay loop.
+      - Developed custom Unity Editor tools to streamline wave design and inspect game architecture.
+
+  - slug: legend-of-sonia
+    name: Legend Of Sonia
+    tagline: 3D arena combat with distinct enemy AI and wave progression.
+    meta: 3D action
+    cover: media/work/legend-of-sonia/cover.webp
+    clips:
+      - { n: 1, label: Gameplay }
+      - { n: 2, label: Gameplay }
+      - { n: 3, label: Gameplay }
+    bullets:
+      - 3D arena wave-based combat game featuring varied enemy archetypes and player progression.
+      - "Designed distinct AI behaviours: fast-attacking zombie soldiers, high-damage ogres and ranged archers with adaptive targeting."
+      - "Implemented power-up systems: health pickups and a ranged fire attack for crowd control."
+      - Balanced enemy difficulty scaling based on wave progression and player level.
+
+  - slug: bunny-rush
+    name: Bunny Rush
+    tagline: 2D platformer with an online leaderboard.
+    meta: 2D platformer
+    cover: media/work/bunny-rush/cover.webp
+    clips:
+      - { n: 1, label: Gameplay }
+      - { n: 2, label: Gameplay }
+    bullets:
+      - 2D platformer where players guide a bunny through dynamic enemy and obstacle patterns.
+      - Procedural enemy behaviour and movement patterns vary with each run for replayability.
+      - Implemented snowstorm particle effects and 2D lighting for atmosphere.
+      - Integrated an online leaderboard using PHP and MySQL to store and display scores globally.
+
+# Other public projects shown as compact rows under the gallery.
+more:
+  - name: Sync Dash
+    note: Hyper-casual prototype of real-time state sync using snapshot interpolation and simulated latency.
+    links:
+      - { label: GitHub, href: "https://github.com/ManishKumarBeck/Sync-Dash" }

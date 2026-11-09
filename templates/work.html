@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% import "macros.html" as ui %}
+{% block meta %}
+<title>{{ w.name }} | {{ site.name }}</title>
+<meta name="description" content="{{ w.tagline }}">
+{% endblock %}
+{% block og_title %}{{ w.name }} | {{ site.name }}{% endblock %}
+{% block og_desc %}{{ w.tagline }}{% endblock %}
+
+{% macro list_bullets(items) %}
+<ul class="ticks">{% for b in items %}<li>{{ b }}</li>{% endfor %}</ul>
+{% endmacro %}
+
+{% block main %}
+<article class="case">
+  <header class="case__head">
+    <div class="wrap wrap--narrow">
+      <a class="back" href="{{ base }}#projects"><span aria-hidden="true">←</span> All projects</a>
+      <p class="kicker">Earlier work · {{ w.meta }}</p>
+      <h1>{{ w.name }}</h1>
+      <p class="case__summary">{{ w.tagline }}</p>
+    </div>
+  </header>
+  <div class="wrap wrap--narrow">
+    <div class="clips">
+      {% for c in w.clips %}
+      <figure class="clip">
+        <video data-autoplay muted loop playsinline preload="none" width="720" height="405"
+               poster="{{ base }}media/work/{{ w.slug }}/clip-{{ c.n }}.webp"
+               aria-label="{{ w.name }}: {{ c.label }}">
+          <source src="{{ base }}media/work/{{ w.slug }}/clip-{{ c.n }}.mp4" type="video/mp4">
+        </video>
+        {% if c.label != "Gameplay" %}<figcaption>{{ c.label }}</figcaption>{% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+
+    {% if w.sections %}
+    <div class="decisions decisions--stack">
+      {% for s in w.sections %}
+      <section class="decision card">
+        <h2>{{ s.title }}</h2>
+        <p>{{ s.summary }}</p>
+        {{ list_bullets(s.bullets) }}
+        {{ ui.tags(s.tech) }}
+        {% if s.video %}<div class="links">{{ ui.external(s.video, "Watch on Vimeo") }}</div>{% endif %}
+      </section>
+      {% endfor %}
+    </div>
+    {% else %}
+    <section class="case__section" aria-labelledby="about-project">
+      <h2 id="about-project">About the project</h2>
+      {{ list_bullets(w.bullets) }}
+    </section>
+    {% endif %}
+
+    <div class="case__end">
+      <a class="link" href="{{ base }}work/{{ next_item.slug }}/">Next: {{ next_item.name }}<span class="link__arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</article>
+{% endblock %}

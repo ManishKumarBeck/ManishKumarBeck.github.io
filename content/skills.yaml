@@ -1,0 +1,84 @@
+# `shown: true` adds a marker meaning "you can see this in a public project".
+# Set it only when a linked repository actually demonstrates the skill.
+
+groups:
+  - title: Programming Languages
+    glyph: code
+    items:
+      - { name: Python, shown: true }
+      - { name: TypeScript, shown: true }
+      - { name: Bash, shown: true }
+      - { name: C#, shown: true }
+      - { name: PHP }
+
+  - title: AI and Generative AI
+    glyph: spark
+    items:
+      - { name: OpenAI API, shown: true }
+      - { name: LangGraph, shown: true }
+      - { name: AI agents and tool calling, shown: true }
+      - { name: LLM evals, shown: true }
+      - { name: Prompt-injection testing, shown: true }
+      - { name: LangChain, shown: true }
+      - { name: RAG pipelines, shown: true }
+      - { name: Embeddings, shown: true }
+      - { name: BM25 + vector search, shown: true }
+      - { name: RRF and MMR, shown: true }
+      - { name: ChromaDB, shown: true }
+      - { name: Structured LLM output, shown: true }
+
+  - title: Backend Engineering
+    glyph: server
+    items:
+      - { name: FastAPI, shown: true }
+      - { name: WebSockets, shown: true }
+      - { name: SimPy, shown: true }
+      - { name: Pydantic, shown: true }
+      - { name: SQLAlchemy, shown: true }
+      - { name: SQLite, shown: true }
+      - { name: REST APIs, shown: true }
+      - { name: Streamlit, shown: true }
+      - { name: PHP and MySQL services }
+
+  - title: Cloud and Infrastructure
+    glyph: cloud
+    items:
+      - { name: "AWS (IAM, EC2, S3)", shown: true }
+      - { name: GCP }
+      - { name: Azure }
+      - { name: Firebase }
+      - { name: Firestore }
+      - { name: Cloud Storage }
+
+  - title: DevOps and CI/CD
+    glyph: loop
+    items:
+      - { name: GitHub Actions, shown: true }
+      - { name: Docker, shown: true }
+      - { name: Shell scripting, shown: true }
+      - { name: Kubernetes }
+      - { name: Jenkins }
+      - { name: Bitbucket Pipelines }
+      - { name: Build automation and versioning }
+
+  - title: Observability and Monitoring
+    glyph: pulse
+    items:
+      - { name: Scheduled resource checks, shown: true }
+      - { name: Threshold alerting, shown: true }
+      - { name: Email alerts over SMTP, shown: true }
+      - { name: Run logs and artifacts, shown: true }
+      - { name: Health endpoints, shown: true }
+      - { name: Agent run tracing, shown: true }
+      - { name: Latency, token and cost tracking, shown: true }
+
+  - title: Engineering Practices
+    glyph: check
+    items:
+      - { name: pytest, shown: true }
+      - { name: Vitest, shown: true }
+      - { name: Playwright end-to-end tests, shown: true }
+      - { name: Ruff and ESLint, shown: true }
+      - { name: "Git (GitHub, GitLab, Bitbucket)", shown: true }
+      - { name: Scrum and Kanban }
+      - { name: Sprint planning }

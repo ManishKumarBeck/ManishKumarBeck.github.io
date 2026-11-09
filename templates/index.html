@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% import "macros.html" as ui %}
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ site.name | tojson }},
+  "url": {{ (site.url ~ base) | tojson }},
+  "jobTitle": "Software Engineer",
+  "description": {{ site.description | tojson }},
+  "worksFor": {"@type": "Organization", "name": "Albaik Food Labs"},
+  "alumniOf": {"@type": "CollegeOrUniversity", "name": "Birla Institute of Technology, Mesra"},
+  "sameAs": [{{ site.contact.linkedin | tojson }}, {{ site.contact.github | tojson }}]
+}
+</script>
+{% endblock %}
+
+{% block main %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>{{ site.role }}</p>
+      <h1 id="hero-title">{{ site.name }}</h1>
+      <p class="hero__headline">{{ site.headline }}</p>
+      <p class="hero__intro">{{ site.intro }}</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#projects">View Projects</a>
+        <a class="btn" href="#contact">Contact Me</a>
+        {% if has_resume %}<a class="btn btn--ghost" href="{{ base }}resume.pdf" download="Manish-Kumar-Beck-Resume.pdf">Download Resume</a>{% endif %}
+      </div>
+      <ul class="hero__focus" aria-label="Primary focus areas">
+        {% for f in site.focus %}<li>{{ f }}</li>{% endfor %}
+      </ul>
+    </div>
+
+    <figure class="trace" data-trace aria-label="Animated schematic of a request moving through retrieval, generation and validation">
+      <div class="trace__bar">
+        <span class="trace__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <code>{{ site.trace.title }}</code>
+        <span class="trace__state" data-trace-state>201</span>
+      </div>
+      <ol class="trace__rows">
+        {% for s in site.trace.spans %}
+        <li class="span span--{{ s.tone }}" style="--d:{{ s.depth }};--s:{{ s.start }};--w:{{ s.width }}">
+          <span class="span__name">{{ s.name }}</span>
+          <span class="span__track"><span class="span__bar"></span></span>
+        </li>
+        {% endfor %}
+      </ol>
+      <div class="trace__out"><span aria-hidden="true">→</span> <code>{{ site.trace.output }}</code></div>
+      <figcaption>{{ site.trace.caption }} <span class="trace__hint">Move across it to scrub.</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="wrap">
+    <dl class="facts">
+      {% for f in site.facts %}
+      <div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="wrap about">
+    <div class="about__copy" data-reveal>
+      <p class="label">About</p>
+      <h2 id="about-title">Backend and cloud engineer, now building with LLMs.</h2>
+      {% for para in site.about.paragraphs %}<p>{{ para }}</p>{% endfor %}
+    </div>
+    <ol class="areas" data-reveal>
+      {% for a in site.about.areas %}
+      <li>
+        <h3>{{ a.title }}</h3>
+        <p>{{ a.detail }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section id="skills" class="section section--tint" aria-labelledby="skills-title">
+  <div class="wrap">
+    <div class="section__head" data-reveal>
+      <p class="label">Technical skills</p>
+      <h2 id="skills-title">The tools behind the work.</h2>
+      <p class="legend"><span class="chip__dot" aria-hidden="true"></span> Marked skills appear in a public project on this site.</p>
+    </div>
+    <div class="skills">
+      {% for g in skills %}
+      <article class="skill card" data-reveal data-spot>
+        <h3>{{ ui.glyph(g.glyph) }}{{ g.title }}</h3>
+        <ul class="chips">
+          {% for i in g["items"] %}
+          <li class="chip{% if i.shown %} chip--shown{% endif %}">{% if i.shown %}<span class="chip__dot" aria-hidden="true"></span>{% endif %}{{ i.name }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="section" aria-labelledby="experience-title">
+  <div class="wrap exp">
+    <div data-reveal>
+      <p class="label">Professional experience</p>
+      <h2 id="experience-title">Where I've worked.</h2>
+      <ol class="timeline">
+        {% for r in experience.roles %}
+        <li class="timeline__item{% if r.period %} timeline__item--now{% endif %}">
+          {% if r.period %}<p class="timeline__period">{{ r.period }}{% if r.location %} · {{ r.location }}{% endif %}</p>{% endif %}
+          <h3>{{ r.title }}</h3>
+          <p class="timeline__org">{{ r.company }}</p>
+          {% if r.summary %}<p class="timeline__summary">{{ r.summary }}</p>{% endif %}
+          {% if r.highlights %}
+          {% set shown = 3 %}
+          <ul class="ticks">{% for h in r.highlights[:shown] %}<li>{{ h }}</li>{% endfor %}</ul>
+          {% if r.highlights | length > shown %}
+          <details class="more">
+            <summary>{{ r.highlights | length - shown }} more</summary>
+            <ul class="ticks">{% for h in r.highlights[shown:] %}<li>{{ h }}</li>{% endfor %}</ul>
+          </details>
+          {% endif %}
+          {% endif %}
+        </li>
+        {% endfor %}
+        {% for e in experience.education %}
+        <li class="timeline__item timeline__item--edu">
+          <p class="timeline__period">Education</p>
+          <h3>{{ e.degree }}</h3>
+          <p class="timeline__org">{{ e.school }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    <aside class="log" data-reveal aria-labelledby="log-title">
+      <h3 id="log-title" class="label">Recent public build log</h3>
+      <ol>
+        {% for b in experience.build_log %}
+        <li>
+          <time>{{ b.date }}</time>
+          <div>
+            {% if b.href.startswith("http") %}{{ ui.external(b.href, b.name) }}{% else %}<a class="link" href="{{ base }}{{ b.href }}">{{ b.name }}</a>{% endif %}
+            <p>{{ b.note }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </aside>
+  </div>
+</section>
+
+<section id="projects" class="section section--tint" aria-labelledby="projects-title">
+  <div class="wrap">
+    <div class="section__head" data-reveal>
+      <p class="label">Featured projects</p>
+      <h2 id="projects-title">Projects you can inspect.</h2>
+    </div>
+
+    {% for lead in projects if lead.feature %}
+    {% set sid = lead.slug %}
+    <article class="lead card{% if loop.index is even %} lead--flip{% endif %}" data-reveal data-spot>
+      <div class="lead__media" data-tabs>
+        <div class="browser">
+          <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="browser__view">
+            {% for s in lead.shots %}
+            <div id="{{ sid }}-shot-{{ loop.index }}" role="tabpanel" aria-labelledby="{{ sid }}-tab-{{ loop.index }}"{% if not loop.first %} hidden{% endif %}>
+              <img src="{{ base }}{{ s.src }}" alt="{{ s.alt }}" width="1100" height="693" loading="lazy" decoding="async">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="{{ lead.name }} screenshots">
+          {% for s in lead.shots %}
+          <button type="button" role="tab" id="{{ sid }}-tab-{{ loop.index }}" aria-controls="{{ sid }}-shot-{{ loop.index }}" aria-selected="{{ 'true' if loop.first else 'false' }}"{% if not loop.first %} tabindex="-1"{% endif %}>{{ s.label }}</button>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="lead__body">
+        <p class="kicker">{{ lead.kicker }}</p>
+        <h3><a href="{{ base }}projects/{{ lead.slug }}/">{{ lead.name }}</a></h3>
+        <p class="lead__summary">{{ lead.summary }}</p>
+        <dl class="detail">
+          <div><dt>Problem</dt><dd>{{ lead.problem }}</dd></div>
+          <div><dt>My contribution</dt><dd>{{ lead.contribution }}</dd></div>
+        </dl>
+        <ul class="ticks">{% for f in lead.features %}<li>{{ f }}</li>{% endfor %}</ul>
+        {% if lead.stats %}
+        <ul class="stats">
+          {% for s in lead.stats %}<li><strong>{{ s.value }}</strong><span>{{ s.label }}</span></li>{% endfor %}
+        </ul>
+        {% endif %}
+        {{ ui.tags(lead.tech) }}
+        <div class="links">
+          <a class="btn btn--primary btn--sm" href="{{ base }}projects/{{ lead.slug }}/">Read the case study</a>
+          {% for l in lead.links %}{{ ui.external(l.href, l.label) }}{% endfor %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+
+    <div class="projects">
+      {% for p in projects if not p.feature %}
+      <article class="project card" data-reveal data-spot>
+        {{ ui.flow(p.flow) }}
+        <p class="kicker">{{ p.kicker }}</p>
+        <h3><a href="{{ base }}projects/{{ p.slug }}/">{{ p.name }}</a></h3>
+        <p>{{ p.summary }}</p>
+        <dl class="detail">
+          <div><dt>Problem</dt><dd>{{ p.problem }}</dd></div>
+          <div><dt>My contribution</dt><dd>{{ p.contribution }}</dd></div>
+        </dl>
+        <details class="more">
+          <summary>Key features</summary>
+          <ul class="ticks">{% for f in p.features %}<li>{{ f }}</li>{% endfor %}</ul>
+        </details>
+        {{ ui.tags(p.tech) }}
+        <div class="links">
+          <a class="link" href="{{ base }}projects/{{ p.slug }}/">Details<span class="link__arrow" aria-hidden="true">→</span></a>
+          {% for l in p.links %}{{ ui.external(l.href, l.label) }}{% endfor %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <div class="apps" data-reveal>
+      <h3 class="label">Published on Google Play</h3>
+      <div class="apps__grid">
+        {% for a in apps %}
+        <a class="app card" href="{{ a.href }}" target="_blank" rel="noopener noreferrer" data-spot>
+          <span class="app__name">{{ a.name }}<span class="link__arrow" aria-hidden="true">↗</span><span class="sr"> (opens in a new tab)</span></span>
+          <span class="app__summary">{{ a.summary }}</span>
+          <span class="app__tags">{{ a.tags | join(" · ") }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="earlier">
+      <div class="earlier__head" data-reveal>
+        <h3 class="label">Earlier work · Unity, AR and VR</h3>
+        <p>Real-time projects from before my focus moved to AI and backend systems.</p>
+      </div>
+      <ul class="tiles">
+        {% for w in work %}
+        <li data-reveal>
+          <a class="tile" href="{{ base }}work/{{ w.slug }}/" data-preview="{{ base }}media/work/{{ w.slug }}/clip-1.mp4">
+            <span class="tile__media">
+              <img src="{{ base }}{{ w.cover }}" alt="" width="640" height="360" loading="lazy" decoding="async">
+            </span>
+            <span class="tile__text">
+              <span class="tile__name">{{ w.name }}</span>
+              <span class="tile__meta">{{ w.meta }}</span>
+            </span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <ul class="rows" data-reveal>
+        {% for m in more %}
+        <li>
+          <div><h4>{{ m.name }}</h4><p>{{ m.note }}</p></div>
+          <div class="links">{% for l in m.links %}{{ ui.external(l.href, l.label) }}{% endfor %}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <div class="wrap contact__grid">
+    <div data-reveal>
+      <p class="label">Contact</p>
+      <h2 id="contact-title">Hiring for AI, backend or platform work? Let's talk.</h2>
+      <p class="contact__lead">{{ site.contact.availability }}. Roles I'm looking at:</p>
+      {{ ui.tags(site.target_roles) }}
+      <div class="contact__cta">
+        <a class="btn btn--primary" href="mailto:{{ site.contact.email }}">Email me</a>
+        <button class="btn" type="button" data-copy="{{ site.contact.email }}">Copy address</button>
+      </div>
+    </div>
+    <ul class="channels" data-reveal>
+      <li><span>Email</span><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></li>
+      <li><span>LinkedIn</span>{{ ui.external(site.contact.linkedin, site.contact.linkedin_label, "") }}</li>
+      <li><span>GitHub</span>{{ ui.external(site.contact.github, site.contact.github_label, "") }}</li>
+      <li><span>Phone</span><a href="{{ site.contact.phone_href }}">{{ site.contact.phone }}</a></li>
+      <li><span>Location</span><p>{{ site.contact.location }}</p></li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

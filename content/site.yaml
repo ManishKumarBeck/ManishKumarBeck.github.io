@@ -1,0 +1,101 @@
+# Global site settings and profile copy. Everything here is rendered into the
+# templates, so editing this file is enough to change the wording on the site.
+
+url: https://manishkumarbeck.github.io
+base: /              # Change to /repo-name/ if you ever host this as a project page.
+lang: en-IN
+
+name: Manish Kumar Beck
+title: Manish Kumar Beck | Software Engineer, AI, Backend and Cloud
+description: >-
+  Software engineer with 5+ years in backend systems, cloud infrastructure and
+  AI integrations. Builds RAG systems and LLM applications in Python, on AWS.
+
+role: Software Engineer · AI, Backend & Cloud
+headline: AI systems built like production software.
+intro: >-
+  I build LLM applications with the same discipline as any backend: retrieval
+  that cites its sources, model output that is validated before anyone sees it,
+  and Python services and cloud infrastructure that keep it all running.
+
+focus:
+  - AI Engineering
+  - Generative AI
+  - AI Agents
+  - RAG
+  - Python Backend Engineering
+  - Cloud Infrastructure
+
+facts:
+  - label: Experience
+    value: 5+ years
+  - label: Core stack
+    value: Python, AWS
+  - label: Location
+    value: India, remote-friendly
+  - label: Open to
+    value: Remote, onsite, freelance
+
+about:
+  paragraphs:
+    - >-
+      I'm a software and DevOps engineer with more than five years of experience
+      across backend systems, cloud infrastructure and AI integrations, working
+      mainly in Python and AWS. I'm currently at Albaik Food Labs.
+    - >-
+      Most of my recent engineering has gone into LLM applications. FloorTrace is
+      an incident-investigation agent with code-checked citations, run tracing and
+      a published eval suite that compares models and prompt versions. McqGen grew
+      from a small LangChain script into a full-stack exam platform with hybrid
+      retrieval and page-level citations.
+    - >-
+      I came to this through real-time software, building Unity games and AR/VR
+      prototypes and publishing apps on Google Play. That work still shapes how I
+      think about state, performance and what a user actually experiences.
+  areas:
+    - title: AI engineering and LLM applications
+      detail: Schema-validated output, citations verified in code, eval suites with known ground truth, and prompt-injection probes.
+    - title: RAG pipelines and AI agents
+      detail: A LangGraph investigator with read-only tools and hard budgets, and hybrid BM25 and vector retrieval with citations down to the page.
+    - title: Python backends and APIs
+      detail: FastAPI, Pydantic and SQLAlchemy services with server-authoritative state and clear error handling.
+    - title: Distributed systems and cloud
+      detail: Exactly-once submission under concurrent requests, containers, and hands-on AWS, GCP and Azure.
+    - title: DevOps, automation and observability
+      detail: CI/CD with GitHub Actions, Jenkins and Bitbucket Pipelines, per-run agent tracing of latency, tokens and cost, and scheduled AWS checks.
+
+target_roles:
+  - AI Engineer
+  - Generative AI Engineer
+  - AI Agent Engineer
+  - Python Backend Engineer
+  - Software Engineer
+  - Platform / DevOps Engineer
+
+contact:
+  email: kumarbeckmanish@gmail.com
+  phone: "+91 7970940151"
+  phone_href: "tel:+917970940151"
+  location: India (remote-friendly)
+  availability: Open to freelance, remote and onsite opportunities
+  linkedin: https://www.linkedin.com/in/manish-kumar-beck-6a0a65161
+  linkedin_label: linkedin.com/in/manish-kumar-beck
+  github: https://github.com/ManishKumarBeck
+  github_label: github.com/ManishKumarBeck
+
+# Hero visual: a schematic of McqGen's "generate from library" request path.
+# `start` and `width` are percentages of the timeline and are illustrative only.
+trace:
+  title: POST /api/tests/generate
+  caption: McqGen request path. Schematic, not measured timings.
+  spans:
+    - { name: request, depth: 0, start: 0, width: 100, tone: root }
+    - { name: retrieve.bm25, depth: 1, start: 3, width: 12, tone: cool }
+    - { name: retrieve.vector, depth: 1, start: 3, width: 16, tone: cool }
+    - { name: fuse.rrf, depth: 1, start: 20, width: 5, tone: cool }
+    - { name: diversify.mmr, depth: 1, start: 26, width: 6, tone: cool }
+    - { name: llm.generate, depth: 1, start: 33, width: 36, tone: signal }
+    - { name: llm.review, depth: 1, start: 69, width: 19, tone: signal }
+    - { name: sanitize.validate, depth: 1, start: 88, width: 6, tone: cool }
+    - { name: draft.save, depth: 1, start: 94, width: 5, tone: cool }
+  output: "citation: Campbell Biology, p. 142"

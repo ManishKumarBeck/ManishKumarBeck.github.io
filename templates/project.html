@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% import "macros.html" as ui %}
+{% block meta %}
+<title>{{ p.name }} | {{ site.name }}</title>
+<meta name="description" content="{{ p.summary }}">
+{% endblock %}
+{% block og_title %}{{ p.name }} | {{ site.name }}{% endblock %}
+{% block og_desc %}{{ p.summary }}{% endblock %}
+
+{% block main %}
+<article class="case">
+  <header class="case__head">
+    <div class="wrap wrap--narrow">
+      <a class="back" href="{{ base }}#projects"><span aria-hidden="true">←</span> All projects</a>
+      <p class="kicker">{{ p.kicker }}</p>
+      <h1>{{ p.name }}</h1>
+      <p class="case__summary">{{ p.summary }}</p>
+      {{ ui.project_links(p.links) }}
+    </div>
+  </header>
+
+  <div class="wrap wrap--narrow">
+    {% if p.shots %}
+    <figure class="browser browser--hero">
+      <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i></div>
+      <img src="{{ base }}{{ p.shots[0].src }}" alt="{{ p.shots[0].alt }}" width="1100" height="693">
+    </figure>
+    {% else %}
+    {{ ui.flow(p.flow) }}
+    {% endif %}
+
+    <div class="case__cols">
+      <section aria-labelledby="problem">
+        <h2 id="problem" class="label">Problem</h2>
+        <p>{{ p.problem }}</p>
+      </section>
+      <section aria-labelledby="contribution">
+        <h2 id="contribution" class="label">My contribution</h2>
+        <p>{{ p.contribution }}</p>
+      </section>
+    </div>
+
+    {% if p.stats %}
+    <ul class="stats stats--wide">
+      {% for s in p.stats %}<li><strong>{{ s.value }}</strong><span>{{ s.label }}</span></li>{% endfor %}
+    </ul>
+    {% endif %}
+
+    <section class="case__section" aria-labelledby="features">
+      <h2 id="features">Key features</h2>
+      <ul class="ticks ticks--cols">{% for f in p.features %}<li>{{ f }}</li>{% endfor %}</ul>
+    </section>
+
+    {% if p.decisions %}
+    <section class="case__section" aria-labelledby="decisions">
+      <h2 id="decisions">Engineering decisions</h2>
+      <div class="decisions">
+        {% for d in p.decisions %}
+        <div class="decision card"><h3>{{ d.title }}</h3><p>{{ d.detail }}</p></div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if p.more_shots or p.shots|length > 1 %}
+    <section class="case__section" aria-labelledby="screens">
+      <h2 id="screens">Screens</h2>
+      <div class="shots">
+        {% for s in p.shots[1:] + (p.more_shots or []) %}
+        <figure>
+          <img src="{{ base }}{{ s.src }}" alt="{{ s.alt }}" width="1100" height="693" loading="lazy" decoding="async">
+          <figcaption>{{ s.label }}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+      {% if p.mobile_shots %}
+      <div class="shots shots--mobile">
+        {% for s in p.mobile_shots %}
+        <figure>
+          <img src="{{ base }}{{ s.src }}" alt="{{ s.alt }}" width="420" height="715" loading="lazy" decoding="async">
+          <figcaption>{{ s.label }}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if p.findings %}
+    <section class="case__section" aria-labelledby="findings">
+      <h2 id="findings">What the evals showed</h2>
+      <div class="decisions">
+        {% for d in p.findings %}
+        <div class="decision card"><h3>{{ d.title }}</h3><p>{{ d.detail }}</p></div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if p.limitations %}
+    <section class="case__section" aria-labelledby="limitations">
+      <h2 id="limitations">Limitations</h2>
+      <ul class="ticks">{% for l in p.limitations %}<li>{{ l }}</li>{% endfor %}</ul>
+    </section>
+    {% endif %}
+
+    <section class="case__section" aria-labelledby="stack">
+      <h2 id="stack">Stack</h2>
+      <table class="stack">
+        <tbody>
+          {% for row in p.stack %}
+          <tr><th scope="row">{{ row.layer }}</th><td>{{ row.tech }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <div class="case__end">
+      {{ ui.project_links(p.links) }}
+      <a class="btn" href="{{ base }}#contact">Contact Me</a>
+    </div>
+  </div>
+</article>
+{% endblock %}

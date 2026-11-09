@@ -1,0 +1,256 @@
+# Featured engineering projects. The first entry is shown as the large feature
+# panel on the home page. Each project with `case_study: true` gets its own page
+# at /projects/<slug>/. Nothing here should be added without a repo or demo to back it.
+
+projects:
+  - slug: floortrace
+    case_study: true
+    feature: true
+    name: FloorTrace
+    kicker: AI agents · Observability · Evals
+    summary: >-
+      A simulated warehouse safety control room. Rule-based detectors raise
+      incidents, a LangGraph agent investigates them and cites the regulations it
+      retrieved, and every step streams to the browser live.
+    problem: >-
+      An agent that writes plausible incident reports is easy to demo and hard to
+      trust. What matters is whether its findings match what really happened,
+      whether its citations are real, and what each run costs.
+    contribution: >-
+      Designed and built it alone: the SimPy simulation, the detectors, the
+      LangGraph investigator, retrieval over US safety regulations, the eval
+      harness, run tracing and the React Three Fiber control room.
+    tech: [Python, SimPy, FastAPI, WebSockets, LangGraph, OpenAI, SQLite, NumPy, React, Three.js, Playwright, Docker]
+    features:
+      - Deterministic detectors for four incident types, with four possible root causes each
+      - LangGraph investigator with six read-only tools, step, time and cost limits
+      - Every citation checked in code against passages retrieved in that run
+      - 56-case eval suite with walled-off ground truth and prompt-injection probes
+      - Per-run tracing of steps, latency, tokens and estimated cost
+    stats:
+      - { value: "72.9%", label: "root-cause accuracy (gpt-5.4-mini, 48 cases)" }
+      - { value: "55/56", label: "reports passed the citation validator (nano, prompt v3)" }
+      - { value: "$0.026", label: "per investigation (mini)" }
+    links:
+      - { label: GitHub, href: "https://github.com/ManishKumarBeck/floortrace" }
+    shots:
+      - { src: media/floortrace/control-room.webp, label: Control room, alt: "FloorTrace control room: a 3D warehouse with an incident marker, the agent trace and an accepted root-cause report" }
+      - { src: media/floortrace/investigating.webp, label: Live trace, alt: "Agent trace streaming tool calls while the investigation is in progress" }
+      - { src: media/floortrace/observability.webp, label: Observability, alt: "Observability page with run outcomes, tool-call counts, latency, tokens, cost and eval results" }
+      - { src: media/floortrace/incidents.webp, label: Incidents, alt: "Incident history list" }
+    decisions:
+      - title: Ground truth is walled off
+        detail: >-
+          Each injected incident records its true cause, but only the eval module
+          may read it. A test walks the source tree and fails if any other module
+          touches that table, and another checks that no event names the cause.
+      - title: Causes have to be inferred
+        detail: >-
+          Every incident type has four plausible causes that leave different
+          evidence, such as speed telemetry, a blocked view or a closed walkway.
+          The incident type alone never gives away the answer.
+      - title: Citations are validated in code
+        detail: >-
+          The model submits only a passage id and a quote. The server rejects
+          passages it never retrieved, quotes that are not exact excerpts, and
+          timeline events it never read. Section, page and URL come from storage.
+      - title: Prompt injection has nothing to grab
+        detail: >-
+          Tool results are wrapped as untrusted data and the agent has no
+          side-effecting tools. The eval suite plants a radio message telling it to
+          change the cause and measures how often it complies.
+      - title: LangGraph, used narrowly
+        detail: >-
+          Only StateGraph, for a loop with real exits: accepted, rejected and
+          retried, over budget, timed out or model error. The LLM provider stays a
+          small interface with OpenAI and fake implementations.
+      - title: A replay demo that needs no key
+        detail: >-
+          The public demo replays real recorded runs at their original timing from
+          static JSON. Live and replay modes share one data contract, so no view
+          knows which it is in.
+    findings:
+      - title: mini diagnoses, nano follows rules
+        detail: >-
+          On the same 56 cases, gpt-5.4-mini found the right root cause 72.9% of the
+          time against 52.1% for nano, while nano was about 4 times cheaper and
+          broke fewer output rules.
+      - title: A fix that made things worse
+        detail: >-
+          Prompt v2 told the model to keep quotes short. nano then stitched
+          non-adjacent sentences together, the exact-excerpt check rejected them,
+          and citation validity fell from 92.6% to 75.6%.
+      - title: The actual fix
+        detail: >-
+          v3 accepts quotes that join exact fragments with an ellipsis, as long as
+          each appears in order. Reports accepted rose to 55 of 56, the best of any
+          run, and severity agreement to 79.2%.
+      - title: One run is not enough
+        detail: >-
+          nano's root-cause accuracy moved between 41.7% and 52.1% across three runs
+          of the same cases, so small gaps between runs are not treated as real.
+    limitations:
+      - The simulation is a toy, with waypoint motion and idealised sensors.
+      - The scenarios, detectors and evals were all written by me, so the scores say nothing about real incidents.
+      - Cost figures are estimates from token counts and list prices, not billing data.
+      - Not legal advice or safety training, and not affiliated with or endorsed by OSHA.
+    stack:
+      - { layer: Simulation, tech: "Python 3.12, SimPy, seeded and reproducible" }
+      - { layer: Backend, tech: "FastAPI, WebSockets, Pydantic v2, SQLAlchemy 2, SQLite" }
+      - { layer: Agent, tech: "LangGraph StateGraph, OpenAI tool calling, fake provider for tests" }
+      - { layer: Retrieval, tech: "BM25 + embeddings fused with RRF over 29 CFR 1910, NumPy search" }
+      - { layer: Frontend, tech: "React 19, TypeScript, React Three Fiber, 2D canvas fallback" }
+      - { layer: Quality, tech: "pytest, Ruff, Vitest, Playwright, Docker, GitHub Actions on Linux and Windows" }
+
+  - slug: mcqgen
+    case_study: true
+    feature: true
+    name: McqGen
+    kicker: RAG · Full-stack exam platform
+    summary: >-
+      An AI exam platform that generates tests from a topic, your notes or a whole
+      book, cites every question to its source, and runs timed exams end to end.
+    problem: >-
+      Asking an LLM for quiz questions is easy. Making those questions traceable to
+      a source, reviewable by a person and delivered under real exam conditions is
+      the hard part.
+    contribution: >-
+      Designed and built the whole product alone: the FastAPI backend, the retrieval
+      pipeline, the React frontend, the test suites and the CI workflow.
+    tech: [Python, FastAPI, LangChain, OpenAI, SQLAlchemy, SQLite, React, TypeScript, Playwright, GitHub Actions]
+    features:
+      - Hybrid BM25 and vector retrieval, fused with RRF and diversified with MMR
+      - Every generated question cites its source and page
+      - Server-authoritative timer, autosave and exactly-once grading
+      - Analytics, printable PDF papers and shuffled answer keys
+    stats:
+      - { value: "147", label: backend tests }
+      - { value: "19", label: Playwright end-to-end tests }
+      - { value: "5", label: document formats ingested }
+    links:
+      - { label: GitHub, href: "https://github.com/ManishKumarBeck/McQGenerator" }
+    shots:
+      - { src: media/mcqgen/analytics-dark.webp, label: Analytics, alt: "McqGen analytics dashboard in dark mode with score trend and accuracy by topic charts" }
+      - { src: media/mcqgen/generate-library.webp, label: Generate, alt: "Create a test form using a library source with a focus query" }
+      - { src: media/mcqgen/exam.webp, label: Exam, alt: "Exam screen with a question, four options, a countdown timer and a question palette" }
+      - { src: media/mcqgen/library.webp, label: Library, alt: "Source library listing indexed documents" }
+    more_shots:
+      - { src: media/mcqgen/dashboard.webp, label: Dashboard, alt: "McqGen dashboard with resume cards and score summaries" }
+      - { src: media/mcqgen/result.webp, label: Results, alt: "Exam results with score breakdown and answer review" }
+      - { src: media/mcqgen/tests.webp, label: Tests, alt: "List of saved tests with search and status filters" }
+    mobile_shots:
+      - { src: media/mcqgen/mobile-exam.webp, label: Mobile exam, alt: "Exam view on a phone" }
+      - { src: media/mcqgen/mobile-palette.webp, label: Question palette, alt: "Question palette sheet on a phone" }
+    decisions:
+      - title: The server owns time
+        detail: >-
+          Each attempt stores its deadline. The client derives the countdown from
+          server time, the API rejects late answers, and expired attempts are
+          submitted automatically even if the browser never returns.
+      - title: Exactly-once submission
+        detail: >-
+          Submitting is a conditional UPDATE on the in-progress status, so duplicate
+          clicks, retries and concurrent requests grade an attempt once. A partial
+          unique index allows one running attempt per test.
+      - title: Structured AI output
+        detail: >-
+          The model returns a JSON-schema-validated object, and every question is
+          then sanitised and validated. Prompts are built as messages and source
+          text is treated as data to resist prompt injection.
+      - title: RAG without extra infrastructure
+        detail: >-
+          Vectors live as normalised float32 blobs in the same database and are
+          searched with NumPy, which suits a personal library. Moving to pgvector
+          later would only touch the retrieval module.
+      - title: Correct answers never reach the exam screen
+        detail: >-
+          The exam endpoint returns questions without answers or explanations.
+          Those are exposed only in results, and results are snapshots, so editing
+          a test later never changes past scores.
+      - title: Safe link fetching
+        detail: >-
+          Only http(s) links are accepted, every redirect is re-checked, and hosts
+          resolving to private, loopback or link-local addresses are refused, with
+          size and time limits.
+    stack:
+      - { layer: Frontend, tech: "React 19, TypeScript, Vite, Tailwind CSS, TanStack Query, Recharts" }
+      - { layer: Backend, tech: "Python, FastAPI, Pydantic v2, SQLAlchemy 2" }
+      - { layer: AI, tech: "LangChain with JSON-schema structured output, OpenAI chat models" }
+      - { layer: Retrieval, tech: "text-embedding-3-small, NumPy cosine similarity, BM25, RRF, MMR" }
+      - { layer: Storage, tech: "SQLite by default, any SQLAlchemy database via DATABASE_URL" }
+      - { layer: Quality, tech: "pytest, Vitest, Playwright, Ruff, ESLint, GitHub Actions CI" }
+    flow: [Source, Chunk, Embed, Retrieve, Generate, Validate, Cite]
+
+  - slug: rag-system
+    case_study: true
+    name: OpenAI RAG System
+    kicker: RAG · LangChain
+    summary: >-
+      A retrieval-augmented chatbot for asking natural-language questions across
+      uploaded PDFs or web pages, with the model and retrieval settings exposed in
+      the UI.
+    problem: >-
+      Long PDFs and web pages are slow to read when you only need one answer, and a
+      plain chat model knows nothing about your documents.
+    contribution: >-
+      Built the Streamlit app and the LangChain pipeline for ingestion, chunking,
+      embedding, retrieval and answering, then deployed it on Render.
+    tech: [Python, LangChain, OpenAI, ChromaDB, Streamlit, BeautifulSoup]
+    features:
+      - Ingests one or more PDFs or web URLs
+      - In-memory ChromaDB vector store built per session
+      - Adjustable model, temperature, max tokens and chunk size
+      - Users supply their own OpenAI key in the UI
+    links:
+      - { label: GitHub, href: "https://github.com/ManishKumarBeck/Rag_System" }
+      - { label: Live demo, href: "https://openai-rag-k1rc.onrender.com/", note: "Free Render instance, allow 30–60 seconds to wake" }
+    stack:
+      - { layer: UI, tech: Streamlit }
+      - { layer: Pipeline, tech: "LangChain text splitting, retriever and chain composition" }
+      - { layer: Model, tech: "OpenAI chat models and embeddings" }
+      - { layer: Vector store, tech: "ChromaDB, in memory" }
+      - { layer: Parsing, tech: "PyPDF, BeautifulSoup web loader" }
+    flow: [Load, Split, Embed, Retrieve, Answer]
+
+  - slug: aws-resource-watch
+    case_study: true
+    name: AWS Resource Watch
+    kicker: Cloud · Monitoring
+    summary: >-
+      A scheduled GitHub Actions monitor that inventories S3, EC2, Lambda and IAM
+      every day and sends an email alert when a check fails.
+    problem: >-
+      Small AWS accounts rarely justify a full monitoring stack, but someone still
+      needs to know when resources are not in the expected state.
+    contribution: >-
+      Wrote the Bash and AWS CLI checks and the workflow, and set up least-privilege
+      read-only IAM access with credentials held in GitHub Secrets.
+    tech: [AWS CLI, Bash, GitHub Actions, IAM, SMTP]
+    features:
+      - Daily cron runs, with manual dispatch for testing
+      - Reports on S3 buckets, EC2 instances, Lambda functions and IAM users
+      - Threshold check that fails the run and triggers an email alert
+      - Logs and artifacts kept for every run
+    links:
+      - { label: GitHub, href: "https://github.com/ManishKumarBeck/aws-monitoring-bot" }
+    stack:
+      - { layer: Scheduler, tech: "GitHub Actions cron and workflow_dispatch" }
+      - { layer: Checks, tech: "Bash, AWS CLI" }
+      - { layer: Alerting, tech: "Email over SMTP on workflow failure" }
+      - { layer: Security, tech: "Read-only IAM user, credentials in GitHub Secrets" }
+    flow: [Cron, AWS CLI, Check, Log, Alert]
+
+# Published apps have no case-study page: the Play Store listing is the source.
+apps:
+  - name: AugStone – AR Learning
+    summary: >-
+      Tours of India's legendary monuments in AR, with chat-powered learning and
+      AI-driven selfies.
+    tags: [AR, AI features, Android]
+    href: https://play.google.com/store/apps/details?id=com.Augwiz.AugStone
+  - name: augGeo – AR World Explorer
+    summary: >-
+      An AR educational app that teaches world geography through a scannable puzzle
+      board, 3D games and interactive exploration of continents, landmarks and wildlife.
+    tags: [AR, Education, Android]
+    href: https://play.google.com/store/apps/details?id=com.augwiz.auggeo

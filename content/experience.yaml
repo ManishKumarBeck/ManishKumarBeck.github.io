@@ -1,0 +1,82 @@
+# One entry per role, newest first. Only `company` and `title` are required.
+# `period` is optional and shown above the title when set (dates are left out on
+# purpose). The first three highlights are visible; the rest sit behind "more".
+
+roles:
+  - company: Albaik Food Labs
+    title: Software & AI Systems | DevOps Engineer
+    period: Current
+    summary: >-
+      Python backend integrations, telemetry and AI-assisted incident analysis
+      for distributed services on AWS.
+    highlights:
+      - Built Python backend integrations and automation workflows that process operational data and connect monitoring systems with AI capabilities.
+      - Developed custom telemetry pipelines capturing application events, service health, execution status, processing latency and performance metrics across distributed systems.
+      - Applied AI-powered analysis to operational telemetry to identify anomalies, investigate failures and speed up root-cause analysis.
+      - Integrated New Relic APM to monitor backend microservices, tracking application performance, transaction latency and errors.
+      - Built dashboards, alert policies and custom metrics to detect performance deviations and improve incident detection.
+      - Evaluated LLM workflows for contextual analysis of application events, logs and monitoring data.
+      - Automated AWS provisioning across environments with Terraform, and reduced unnecessary cloud spend through resource analysis and configuration changes.
+      - Partnered with engineering teams to troubleshoot production issues and improve service reliability.
+
+  - company: Augwiz Technologies Pvt Ltd
+    title: AI Engineer | DevOps Engineer
+    summary: >-
+      LLM-powered features for Unity-based AR apps, plus the delivery pipeline
+      and infrastructure behind them.
+    highlights:
+      - Built backend integrations connecting OpenAI APIs with application services, enabling user-prompted AI content generation inside Unity-based AR applications.
+      - Designed and maintained CI/CD pipelines with GitHub Actions and GitLab CI, reducing release time by 45%.
+      - Deployed containerised services with Docker and Kubernetes, and provisioned AWS infrastructure with Terraform.
+      - Developed application workflows combining user prompts, LLM APIs and application logic to deliver dynamic, personalised content.
+      - Implemented centralised monitoring with Prometheus, Grafana and Loki.
+      - Reduced non-production resource usage by approximately 25% through automated shutdown policies and monitoring.
+
+  - company: Bigthinx
+    title: Unity Developer (DevOps & AI)
+    summary: >-
+      Unity development for AI-powered fashion technology apps, while also owning
+      containerisation, Kubernetes, infrastructure as code and monitoring.
+    highlights:
+      # Add your Unity work here, first: one or two bullets on what you built in Unity.
+      - Worked on backend and cloud integrations supporting image-intensive, AI-powered fashion technology applications.
+      - Containerised backend services with Docker and migrated workloads to Kubernetes (EKS), reducing deployment time from hours to minutes.
+      - Implemented cost optimisation and auto-scaling strategies, improving infrastructure utilisation by approximately 30%.
+      - Identified application performance bottlenecks using New Relic APM, infrastructure monitoring and distributed tracing.
+      - Managed Terraform infrastructure as code for AWS resources, including EC2, S3, Route53 and IAM.
+      - Built Grafana dashboards for deployment analytics, CI/CD performance and infrastructure metrics.
+      - Developed Python and Bash automation for log processing, artifact cleanup and service management.
+
+  - company: Alter Learning
+    title: DevOps Engineer
+    summary: >-
+      Backend and cloud integrations, CI/CD and multi-environment deployments for
+      AI-enabled educational applications.
+    highlights:
+      - Integrated S3 asset storage with CloudFront CDN delivery, improving asset load times by 50%.
+      - Designed CI/CD pipelines with GitHub Actions, Docker and AWS CodePipeline, and added automated testing hooks that reduced manual QA effort by 40%.
+      - Migrated on-premise build servers to AWS EC2, improving scalability and reducing downtime.
+      - Managed multi-environment deployments for backend APIs and Unity applications across development, staging and production.
+      - Developed and maintained backend and cloud integrations for AI-enabled educational applications.
+      - Automated AWS provisioning with Terraform and Ansible, and monitored application health with CloudWatch and Grafana.
+
+  - company: Lone Wolf Studios
+    title: Unity Game Developer
+    summary: >-
+      Reusable C# features and real-time client-server sync with a PHP backend.
+    highlights:
+      - Developed reusable C# modules and application features, and integrated PHP backend communication for real-time client-server data synchronisation.
+      - Investigated application issues, optimised performance across devices and migrated deprecated APIs.
+      - Collaborated with designers, developers and product stakeholders in Agile workflows.
+
+education:
+  - school: Birla Institute of Technology, Mesra
+    degree: Bachelor of Engineering, Computer Science
+
+# Dates come from each repository's commit history.
+build_log:
+  - { date: "Nov 2026", name: "FloorTrace", note: "Agent evals across models and prompt versions", href: "projects/floortrace/" }
+  - { date: "Nov 2026", name: "McqGen", note: "Source library, citations and printable exams", href: "projects/mcqgen/" }
+  - { date: "Nov 2025", name: "Sync Dash", note: "Snapshot interpolation in a Unity prototype", href: "https://github.com/ManishKumarBeck/Sync-Dash" }
+  - { date: "Sep 2025", name: "AWS Resource Watch", note: "Daily AWS checks on GitHub Actions", href: "projects/aws-resource-watch/" }
+  - { date: "Sep 2025", name: "OpenAI RAG System", note: "Chat over PDFs and web pages", href: "projects/rag-system/" }
